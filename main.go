@@ -7,11 +7,26 @@ import (
 	"net/http"
 	"strconv"
 
+	_ "zebrash-api/docs"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/ingridhq/zebrash"
 	"github.com/ingridhq/zebrash/drawers"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+// @title Zebrash API
+// @version 1.0
+// @description API for rendering ZPL (Zebra Programming Language) to PNG images
+// @host localhost:3009
+// @BasePath /
+
+// HealthResponse represents the response from the health endpoint
+type HealthResponse struct {
+	Status string `json:"status" example:"healthy"`
+}
 
 func main() {
 	// Set Gin to release mode for production
@@ -22,19 +37,48 @@ func main() {
 
 	// Health check endpoint
 	r.GET("/health", healthHandler)
-	
+
 	// ZPL rendering endpoint
 	r.POST("/render/:x/:y/:dpmm", renderHandler)
+	
+	// Swagger endpoints
+	r.GET("/docs", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/docs/index.html")
+	})
+	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.GET("/spec.json", func(c *gin.Context) {
+		c.Header("Content-Type", "application/json")
+		c.File("./docs/swagger.json")
+	})
 	
 	port := ":3009"
 	log.Printf("Server starting on port %s", port)
 	log.Fatal(r.Run(port))
 }
 
+// @Summary Health check endpoint
+// @Description Returns the health status of the API
+// @Tags health
+// @Produce json
+// @Success 200 {object} HealthResponse
+// @Router /health [get]
 func healthHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "healthy"})
 }
 
+// @Summary Render ZPL to PNG
+// @Description Renders ZPL (Zebra Programming Language) data to a PNG image
+// @Tags render
+// @Accept plain
+// @Produce png
+// @Param x path int true "Label width in millimeters"
+// @Param y path int true "Label height in millimeters"
+// @Param dpmm path int true "Dots per millimeter (resolution)"
+// @Param zpl body string true "ZPL code to render"
+// @Success 200 {file} image/png
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /render/{x}/{y}/{dpmm} [post]
 func renderHandler(c *gin.Context) {
 	// Extract URL parameters
 	x, err := strconv.Atoi(c.Param("x"))

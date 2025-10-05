@@ -1,0 +1,78 @@
+basePath: /
+definitions:
+  main.HealthResponse:
+    properties:
+      status:
+        example: healthy
+        type: string
+    type: object
+host: localhost:3009
+info:
+  contact: {}
+  description: API for rendering ZPL (Zebra Programming Language) to PNG images
+  title: Zebrash API
+  version: "1.0"
+paths:
+  /health:
+    get:
+      description: Returns the health status of the API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.HealthResponse'
+      summary: Health check endpoint
+      tags:
+      - health
+  /render/{x}/{y}/{dpmm}:
+    post:
+      consumes:
+      - text/plain
+      description: Renders ZPL (Zebra Programming Language) data to a PNG image
+      parameters:
+      - description: Label width in millimeters
+        in: path
+        name: x
+        required: true
+        type: integer
+      - description: Label height in millimeters
+        in: path
+        name: "y"
+        required: true
+        type: integer
+      - description: Dots per millimeter (resolution)
+        in: path
+        name: dpmm
+        required: true
+        type: integer
+      - description: ZPL code to render
+        in: body
+        name: zpl
+        required: true
+        schema:
+          type: string
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Render ZPL to PNG
+      tags:
+      - render
+swagger: "2.0"

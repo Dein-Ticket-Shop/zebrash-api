@@ -1,0 +1,117 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for rendering ZPL (Zebra Programming Language) to PNG images",
+        "title": "Zebrash API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3009",
+    "basePath": "/",
+    "paths": {
+        "/health": {
+            "get": {
+                "description": "Returns the health status of the API",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "Health check endpoint",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.HealthResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/render/{x}/{y}/{dpmm}": {
+            "post": {
+                "description": "Renders ZPL (Zebra Programming Language) data to a PNG image",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "image/png"
+                ],
+                "tags": [
+                    "render"
+                ],
+                "summary": "Render ZPL to PNG",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Label width in millimeters",
+                        "name": "x",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Label height in millimeters",
+                        "name": "y",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Dots per millimeter (resolution)",
+                        "name": "dpmm",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "ZPL code to render",
+                        "name": "zpl",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.HealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "healthy"
+                }
+            }
+        }
+    }
+}

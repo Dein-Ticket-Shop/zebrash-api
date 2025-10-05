@@ -57,6 +57,40 @@ curl -X POST \
 
 This example renders a label that is 101mm wide by 152mm high at 203 DPI resolution.
 
+### API Documentation
+
+The API includes comprehensive OpenAPI/Swagger documentation:
+
+```
+GET /spec.json
+```
+
+Returns the OpenAPI specification in JSON format, containing the complete API schema with request/response models, parameter definitions, and example values.
+
+```
+GET /docs
+```
+
+Provides an interactive Swagger UI interface where you can:
+
+-   Explore all available endpoints
+-   View detailed parameter and response schemas
+-   Test API endpoints directly from your browser
+-   Download the OpenAPI specification
+
+**Access the documentation:**
+
+-   **Interactive UI:** http://localhost:3009/docs
+-   **OpenAPI Spec:** http://localhost:3009/spec.json
+
+The documentation is automatically generated from code annotations and includes:
+
+-   Complete endpoint descriptions
+-   Request/response schemas
+-   Parameter validation rules
+-   Example requests and responses
+-   Error response formats
+
 ## Quick Start
 
 ### Using Docker (Recommended)
@@ -225,6 +259,27 @@ The API includes CORS (Cross-Origin Resource Sharing) headers to allow requests 
 
 -   [Gin Web Framework](https://github.com/gin-gonic/gin) - HTTP web framework with CORS support
 -   [Zebrash](https://github.com/ingridhq/zebrash) - ZPL to PNG conversion library
+-   [Swaggo](https://github.com/swaggo/swag) - OpenAPI/Swagger documentation generator
+
+## Development
+
+### Regenerating API Documentation
+
+If you modify the API endpoints or their documentation annotations, regenerate the Swagger docs:
+
+1. Install the swag CLI tool:
+
+```bash
+go install github.com/swaggo/swag/cmd/swag@latest
+```
+
+2. Generate documentation:
+
+```bash
+swag init
+```
+
+This will update the files in the `docs/` directory with the latest API schema.
 
 ## Error Handling
 
