@@ -65,8 +65,8 @@ github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/ingridhq/maxicode v1.4.0 h1:VV5GR0t+o0QN8OqdVFYKJQ2QC9o474OLzMBhlm/1Ud0=
 github.com/ingridhq/maxicode v1.4.0/go.mod h1:GLpBZPEHER1a3vNIRV5EbeBDy7XYanIQOWqesrwZpeo=
-github.com/ingridhq/zebrash v1.26.1 h1:mK+PuSqqKXyVND0Gpe4zfweDFyZS0rpiHGm1BuaxJME=
-github.com/ingridhq/zebrash v1.26.1/go.mod h1:xDh6hT05Hz/IZCT7HAyfXMOr5X6jAcKYbMiG+hGxb60=
+github.com/ingridhq/zebrash v1.26.2 h1:WaBRr77PzSzve5HoCdcbMElfyPd/hM+CLkQd5a2hjok=
+github.com/ingridhq/zebrash v1.26.2/go.mod h1:xDh6hT05Hz/IZCT7HAyfXMOr5X6jAcKYbMiG+hGxb60=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/klauspost/cpuid/v2 v2.3.0 h1:S4CRMLnYUhGeDFDqkGriYKdfoFlDnMtqTiI/sFzhA9Y=
